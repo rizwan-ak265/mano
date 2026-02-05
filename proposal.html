@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Special Question 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 390px;
+            width: 100%;
+        }
+
+        /* Question Page */
+        .question-page {
+            animation: fadeIn 1s ease-in;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .no-message {
+            color: white;
+            font-size: 22px;
+            margin-top: 20px;
+            min-height: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 40px;
+            line-height: 1.4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 200px;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 18px 45px;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 10px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .no-btn {
+            background: white;
+            color: #667eea;
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        /* Celebration Page */
+        .celebration-page {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .celebration-page.active {
+            display: block;
+        }
+
+        .celebration-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            animation: bounce 0.6s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .celebration-text {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .love-message {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .couple-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            margin: 30px auto;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating hearts animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 30px;
+            opacity: 0.6;
+            animation: float-up 6s ease-in infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                bottom: -50px;
+                opacity: 0.6;
+            }
+            100% {
+                bottom: 110%;
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+
+        .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 30%; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 50%; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 70%; animation-delay: 1s; }
+        .heart:nth-child(5) { left: 90%; animation-delay: 3s; }
+
+        /* Slideshow Styles */
+        .slideshow-container {
+            display: none;
+            animation: fadeIn 1s ease-in;
+            padding: 20px;
+            max-width: 390px;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .slideshow-container.active {
+            display: block;
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 20px;
+            margin: 20px auto 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            border: 4px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .slide-heading {
+            color: white;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .slide-paragraph {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .continue-btn, .nav-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover, .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .slide-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Timer Box Styles */
+        .timer-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 350px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .timer-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .timer-display {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            color: white;
+        }
+
+        .timer-unit {
+            text-align: center;
+        }
+
+        .timer-value {
+            font-size: 20px;
+            font-weight: 700;
+            display: block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .timer-text {
+            font-size: 10px;
+            display: block;
+            margin-top: 3px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts">
+        <div class="heart">💕</div>
+        <div class="heart">💖</div>
+        <div class="heart">💗</div>
+        <div class="heart">💝</div>
+        <div class="heart">💕</div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="openingMusic" loop>
+        <source src="opening.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="yesMusic" loop>
+        <source src="yes.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- Question Page -->
+        <div class="question-page" id="questionPage">
+            <div class="heart-icon">💍</div>
+            <h1>Will you be my wifey forevererer? 💕</h1>
+            <div class="no-message" id="noMessage"></div>
+            <div class="buttons-container" id="buttonsContainer">
+                <button class="yes-btn" onclick="celebrate()">Yes! 💖</button>
+                <button class="no-btn" id="noBtn" onclick="moveButton()">No</button>
+            </div>
+        </div>
+
+        <!-- Celebration Page -->
+        <div class="celebration-page" id="celebrationPage">
+            <div class="celebration-icon">🎉💍✨</div>
+            <div class="celebration-text">
+                Yayyyyy! 🎊<br>
+                I knew my baby would say yes! 💕
+            </div>
+            <img src="us.JPG.jpeg" class="couple-photo" alt="Us together">
+            <div class="love-message">
+                I've a little something prepared for you 💕
+            </div>
+            <button class="continue-btn" onclick="startSlideshow()">Continue 💕</button>
+        </div>
+
+        <!-- Slideshow Section -->
+        <div class="slideshow-container" id="slideshowContainer">
+            <!-- Slide 1 -->
+            <div class="slide active" id="slide1">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">Your first message ❤️</div>
+                <img src="ss1.JPEG" class="slide-image" alt="First message">
+                <div class="slide-paragraph">
+                    Still remember the first time you texted me and it's already 1.5 years since.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide" id="slide2">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years2">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months2">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days2">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours2">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes2">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds2">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">31st Aug, 2024</div>
+                <img src="ss2.JPEG" class="slide-image" alt="August 31st">
+                <div class="slide-paragraph">
+                    Started falling for you from the very start 👉👈. When I told you I never talked to anyone this much, and you asked me "pyaar hogaya apko?" You didn't know I fell for you the first time I heard your sweet voice 🫠.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide" id="slide3">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years3">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months3">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days3">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours3">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes3">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds3">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">1st September, 2024</div>
+                <img src="ss3.JPEG" class="slide-image" alt="September 1st">
+                <div class="slide-paragraph">
+                    My silly ways of hearing "I love you" from you😅. This was the first time you said that to me, who would have known we'll end up loving each other so much? 🥰
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide" id="slide4">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years4">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months4">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days4">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours4">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes4">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds4">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">2nd September, 2024</div>
+                <img src="ss4.png" class="slide-image" alt="September 2nd">
+                <div class="slide-paragraph">
+                    When I thought it was all over 😅. I tried to leave with a heavy heart....
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide" id="slide5">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years5">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months5">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days5">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours5">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes5">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds5">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">2nd September, 2024</div>
+                <img src="ss5.png" class="slide-image" alt="Meant to be">
+                <div class="slide-paragraph">
+                    But we were meant to be together 🥰
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide" id="slide6">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years6">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months6">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days6">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours6">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes6">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds6">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">13th December, 2024</div>
+                <img src="ss6.jpeg" class="slide-image" alt="First meeting">
+                <div class="slide-paragraph">
+                    Fast forward to when we finally met🥰. <br>
+                    Seeing you for the first time, first time holding your hand.
+                    The feeling will stay inside my heart forever 💕.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="slide" id="slide7">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years7">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months7">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days7">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours7">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes7">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds7">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">1st January, 2025</div>
+                <img src="ss7.png" class="slide-image" alt="January 1st">
+                <div class="slide-paragraph">
+                    And we met again 👉👈. Will always remember our makeout session, with you out of energy 🤭. (Next time Nashta kar k ana)
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="slide" id="slide8">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years8">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months8">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days8">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours8">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes8">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds8">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">Our cute times together</div>
+                <img src="ss8.jpeg" class="slide-image" alt="Cute times">
+                <div class="slide-paragraph">
+                    We may be far in distance but all the fun we have together is definitely more than most of couples 🥰.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 9 -->
+            <div class="slide" id="slide9">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years9">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months9">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days9">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours9">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes9">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds9">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">Prettiest girl 😚</div>
+                <img src="ss9.jpeg" class="slide-image" alt="Prettiest girl">
+                <div class="slide-paragraph">
+                    I wish I could just take you out of the pictures and hug you and kiss you and tell you how much I am in love with you 👉👈
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 10 -->
+            <div class="slide" id="slide10">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years10">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months10">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days10">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours10">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes10">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds10">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">So grateful to have you 💕</div>
+                <img src="ss10.jpeg" class="slide-image" alt="Grateful">
+                <div class="slide-paragraph">
+                    I wanna thank you for all the things you did for me. I know my baby is trying her best to be a perfect wife, a great daughter and the best person. I am really proud of you 🥰. And I love you soooo much, mmuahhh 😚.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 11 -->
+            <div class="slide" id="slide11">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years11">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months11">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days11">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours11">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes11">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds11">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">😅😅</div>
+                <img src="ss11.jpeg" class="slide-image" alt="Coding" style="filter: blur(3px);">
+                <div class="slide-paragraph">
+                    Here's nerdy me coding this webpage for you. This was supposed to be on the trend "Will you be my valentine" but I want you to be my wifey foreverererer 👉👈. There is so much more that I'll do for love, for you 🥰. I promise I'll always try to make you feel like the most loved wife, I promise to give you all the happiness you deserve and I promise never to make you feel lonely ever. I'll always be by your side 💕. I've so many ways to love you, and I'll love you in every way once you re here with me 🥰.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                    <button class="nav-btn" onclick="nextSlide()">Next 💕</button>
+                </div>
+            </div>
+
+            <!-- Slide 12 -->
+            <div class="slide" id="slide12">
+                <div class="timer-box">
+                    <div class="timer-label">Together for 💕</div>
+                    <div class="timer-display" id="timer">
+                        <div class="timer-unit">
+                            <span class="timer-value" id="years12">0</span>
+                            <span class="timer-text">Years</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="months12">0</span>
+                            <span class="timer-text">Months</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="days12">0</span>
+                            <span class="timer-text">Days</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="hours12">0</span>
+                            <span class="timer-text">Hours</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="minutes12">0</span>
+                            <span class="timer-text">Mins</span>
+                        </div>
+                        <div class="timer-unit">
+                            <span class="timer-value" id="seconds12">0</span>
+                            <span class="timer-text">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-heading">🥹🥹</div>
+                <img src="ss12.jpeg" class="slide-image" alt="Final slide">
+                <div class="slide-paragraph">
+                    Here's me being sorry for all the times I made you cry (especially last night). Sometimes I hurt you, but always remember I never want to 😔
+                    I'll always try being a better version of myself, and I hope you'll try to forgive me for the bad times 😔. Ending here, hope you liked this 🥰. Lots of love <3.
+                </div>
+                <div class="slide-navigation">
+                    <button class="nav-btn" onclick="prevSlide()">Previous</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const container = document.getElementById('buttonsContainer');
+        const noMessage = document.getElementById('noMessage');
+        
+        const noMessages = [
+            "Are you sure mano? 🥹",
+            "Kya itna bura hun mai? 😔💔",
+            "Keep trying, I'm gonna wife you up still 😛",
+            "But I loveeeee youuuuu 🥹",
+            "Yes kardo naw jaanuu 🥺",
+            "What will I do without my bunny?😔",
+            "Apko kya lagta hai NO honay dunga mai? 🤭"
+        ];
+        let noClickCount = 0;
+        
+        function moveButton() {
+            // Show message
+            noMessage.textContent = noMessages[noClickCount % noMessages.length];
+            noClickCount++;
+            
+            // Trigger heartbreak animation
+            createHeartbreakAnimation();
+            
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Get random position within container bounds
+            const maxX = containerRect.width - btnRect.width - 20;
+            const maxY = containerRect.height - btnRect.height - 20;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function createHeartbreakAnimation() {
+            const sadEmojis = ['💔', '😢', '😭', '🥺', '😔'];
+            const numberOfEmojis = 8;
+            
+            for (let i = 0; i < numberOfEmojis; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.style.position = 'fixed';
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = '-50px';
+                    emoji.style.fontSize = '35px';
+                    emoji.style.zIndex = '1000';
+                    emoji.style.pointerEvents = 'none';
+                    emoji.innerText = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                    
+                    document.body.appendChild(emoji);
+                    
+                    const fallDuration = 2 + Math.random() * 1;
+                    emoji.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0.3 }
+                    ], {
+                        duration: fallDuration * 1000,
+                        easing: 'ease-in'
+                    });
+                    
+                    setTimeout(() => emoji.remove(), fallDuration * 1000);
+                }, i * 80);
+            }
+        }
+
+        function celebrate() {
+            const questionPage = document.getElementById('questionPage');
+            const celebrationPage = document.getElementById('celebrationPage');
+            
+            questionPage.style.display = 'none';
+            celebrationPage.classList.add('active');
+            
+            // Stop opening music and play yes music
+            const openingMusic = document.getElementById('openingMusic');
+            const yesMusic = document.getElementById('yesMusic');
+            openingMusic.pause();
+            yesMusic.play();
+            
+            // Create confetti effect
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const emojis = ['🎉', '💕', '💖', '💗', '✨', '💝', '🎊'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-50px';
+                    confetti.style.fontSize = '30px';
+                    confetti.style.zIndex = '1000';
+                    confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const fallDuration = 3 + Math.random() * 2;
+                    confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
+                    ], {
+                        duration: fallDuration * 1000,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    });
+                    
+                    setTimeout(() => confetti.remove(), fallDuration * 1000);
+                }, i * 100);
+            }
+        }
+
+        // Initialize no button position
+        window.addEventListener('load', () => {
+            noBtn.style.left = '0px';
+            noBtn.style.top = '60px';
+            
+            // Play opening music
+            const openingMusic = document.getElementById('openingMusic');
+            openingMusic.play().catch(e => {
+                // Auto-play might be blocked, will play on first user interaction
+                document.body.addEventListener('click', () => {
+                    openingMusic.play();
+                }, { once: true });
+            });
+        });
+
+        // Slideshow functionality
+        let currentSlide = 1;
+        const totalSlides = 12; // Will update as we add more slides
+
+        function startSlideshow() {
+            const celebrationPage = document.getElementById('celebrationPage');
+            const slideshowContainer = document.getElementById('slideshowContainer');
+            
+            celebrationPage.classList.remove('active');
+            celebrationPage.style.display = 'none';
+            slideshowContainer.classList.add('active');
+            
+            // Start the timer
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function updateTimer() {
+            const startDate = new Date('2024-08-29T00:00:00');
+            const now = new Date();
+            
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+            let hours = now.getHours() - startDate.getHours();
+            let minutes = now.getMinutes() - startDate.getMinutes();
+            let seconds = now.getSeconds() - startDate.getSeconds();
+            
+            // Adjust for negative values
+            if (seconds < 0) {
+                seconds += 60;
+                minutes--;
+            }
+            if (minutes < 0) {
+                minutes += 60;
+                hours--;
+            }
+            if (hours < 0) {
+                hours += 24;
+                days--;
+            }
+            if (days < 0) {
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+                months--;
+            }
+            if (months < 0) {
+                months += 12;
+                years--;
+            }
+            
+            // Update all timer displays (for all slides)
+            for (let i = 1; i <= totalSlides; i++) {
+                const suffix = i === 1 ? '' : i;
+                document.getElementById('years' + suffix).textContent = years;
+                document.getElementById('months' + suffix).textContent = months;
+                document.getElementById('days' + suffix).textContent = days;
+                document.getElementById('hours' + suffix).textContent = hours;
+                document.getElementById('minutes' + suffix).textContent = minutes;
+                document.getElementById('seconds' + suffix).textContent = seconds;
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                document.getElementById('slide' + currentSlide).classList.remove('active');
+                currentSlide++;
+                document.getElementById('slide' + currentSlide).classList.add('active');
+                window.scrollTo(0, 0);
+                
+                // Trigger kiss animation on slide 10
+                if (currentSlide === 10) {
+                    createKissAnimation();
+                }
+            }
+        }
+
+        function createKissAnimation() {
+            const kissEmojis = ['😘', '💋', '😚', '😙', '💕'];
+            const numberOfKisses = 15;
+            
+            for (let i = 0; i < numberOfKisses; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.style.position = 'fixed';
+                    kiss.style.left = Math.random() * 100 + '%';
+                    kiss.style.top = '-50px';
+                    kiss.style.fontSize = '40px';
+                    kiss.style.zIndex = '1000';
+                    kiss.style.pointerEvents = 'none';
+                    kiss.innerText = kissEmojis[Math.floor(Math.random() * kissEmojis.length)];
+                    
+                    document.body.appendChild(kiss);
+                    
+                    const fallDuration = 2.5 + Math.random() * 1.5;
+                    kiss.animate([
+                        { transform: 'translateY(0) rotate(0deg) scale(1)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg) scale(1.2)`, opacity: 0.5 }
+                    ], {
+                        duration: fallDuration * 1000,
+                        easing: 'ease-in-out'
+                    });
+                    
+                    setTimeout(() => kiss.remove(), fallDuration * 1000);
+                }, i * 100);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                document.getElementById('slide' + currentSlide).classList.remove('active');
+                currentSlide--;
+                document.getElementById('slide' + currentSlide).classList.add('active');
+                window.scrollTo(0, 0);
+            }
+        }
+    </script>
+</body>
+</html>
